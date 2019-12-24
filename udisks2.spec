@@ -60,7 +60,7 @@ Name:    udisks2
 Summary: Disk Manager
 Version: 2.8.1
 %if %{is_git} == 0
-Release: 2
+Release: 3 
 %else
 Release: 0.%{build_date}git%{git_hash}%{?dist}
 %endif
@@ -321,29 +321,22 @@ chrpath --delete %{buildroot}/%{_libexecdir}/udisks2/udisksd
 
 %post -n %{name}
 %systemd_post udisks2.service
-%systemd_post clean-mount-point@.service
-udevadm control --reload
 udevadm trigger
 
 %preun -n %{name}
 %systemd_preun udisks2.service
-%systemd_preun clean-mount-point@.service
 
 %postun -n %{name}
 %systemd_postun_with_restart udisks2.service
-%systemd_postun clean-mount-point@.service
 
 %ldconfig_scriptlets -n lib%{name}
 
 %if 0%{?with_zram}
 %post -n %{name}-zram
-%systemd_post zram-setup@.service
 
 %preun -n %{name}-zram
-%systemd_preun zram-setup@.service
 
 %postun -n %{name}-zram
-%systemd_postun zram-setup@.service
 %endif
 
 %files -f udisks2.lang
@@ -444,6 +437,12 @@ udevadm trigger
 %endif
 
 %changelog
+* Tue Dec 24 2019 openEuler Buildteam <buildteam@openeuler.org> - 2.8.1-3
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:avoid errors during installation and uninstallation
+
 * Tue Sep 05 2019 suweifeng <suweifeng1@huawei.com> - 2.8.1-2
 - Type:enhancemnet
 - ID:NA
