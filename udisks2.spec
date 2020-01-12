@@ -60,7 +60,7 @@ Name:    udisks2
 Summary: Disk Manager
 Version: 2.8.1
 %if %{is_git} == 0
-Release: 3 
+Release: 4 
 %else
 Release: 0.%{build_date}git%{git_hash}%{?dist}
 %endif
@@ -157,8 +157,8 @@ Summary: Module for iSCSI
 Group: System Environment/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 License: LGPLv2+
-Requires: iscsi-initiator-utils
-BuildRequires: iscsi-initiator-utils-devel
+Requires: open-iscsi
+BuildRequires: open-iscsi-devel
 Provides:  storaged-iscsi = %{version}-%{release}
 Obsoletes: storaged-iscsi
 
@@ -437,6 +437,12 @@ udevadm trigger
 %endif
 
 %changelog
+* Sun Jan 12 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.8.1-4
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:revise the bogus date in changelog and iscsi-initiator-utils to open-iscsi
+
 * Tue Dec 24 2019 openEuler Buildteam <buildteam@openeuler.org> - 2.8.1-3
 - Type:bugfix
 - ID:NA
