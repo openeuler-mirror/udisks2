@@ -286,9 +286,9 @@ autoreconf -ivf
     --enable-lsm      \
 %endif
 %if 0%{?with_lvmcache}
-    --enable-lvmcache
+    --enable-lvmcache \
 %endif
-    --enable-lvm2     \
+    --enable-lvm2
 make %{?_smp_mflags}
 
 %install
