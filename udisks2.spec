@@ -443,7 +443,7 @@ udevadm trigger
 - SUG:NA
 - DESC:avoid errors during installation and uninstallation
 
-* Tue Sep 05 2019 suweifeng <suweifeng1@huawei.com> - 2.8.1-2
+* Thu Sep 05 2019 suweifeng <suweifeng1@huawei.com> - 2.8.1-2
 - Type:enhancemnet
 - ID:NA
 - SUG:NA
