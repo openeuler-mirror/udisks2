@@ -60,7 +60,7 @@ Name:    udisks2
 Summary: Disk Manager
 Version: 2.8.1
 %if %{is_git} == 0
-Release: 3 
+Release: 4 
 %else
 Release: 0.%{build_date}git%{git_hash}%{?dist}
 %endif
@@ -151,19 +151,6 @@ Obsoletes: libstoraged
 %description -n lib%{name}
 This package contains the dynamic library, which provides
 access to the udisksd daemon.
-
-%package -n %{name}-iscsi
-Summary: Module for iSCSI
-Group: System Environment/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release}
-License: LGPLv2+
-Requires: iscsi-initiator-utils
-BuildRequires: iscsi-initiator-utils-devel
-Provides:  storaged-iscsi = %{version}-%{release}
-Obsoletes: storaged-iscsi
-
-%description -n %{name}-iscsi
-This package contains module for iSCSI configuration.
 
 %package -n %{name}-lvm2
 Summary: Module for LVM2
@@ -301,8 +288,7 @@ autoreconf -ivf
 %if 0%{?with_lvmcache}
     --enable-lvmcache \
 %endif
-    --enable-lvm2     \
-    --enable-iscsi
+    --enable-lvm2
 make %{?_smp_mflags}
 
 %install
@@ -385,10 +371,6 @@ udevadm trigger
 %{_libdir}/udisks2/modules/libudisks2_lvm2.so
 %{_datadir}/polkit-1/actions/org.freedesktop.UDisks2.lvm2.policy
 
-%files -n %{name}-iscsi
-%{_libdir}/udisks2/modules/libudisks2_iscsi.so
-%{_datadir}/polkit-1/actions/org.freedesktop.UDisks2.iscsi.policy
-
 %files -n lib%{name}-devel
 %{_libdir}/libudisks2.so
 %dir %{_includedir}/udisks2
@@ -437,13 +419,19 @@ udevadm trigger
 %endif
 
 %changelog
+* Sun Jan 12 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.8.1-4
+- Type:bugfix
+- ID:NA
+- SUG:NA
+- DESC:revise the bogus date in changelog and delete the unnecessary subpackage "udisks2-iscsi"
+
 * Tue Dec 24 2019 openEuler Buildteam <buildteam@openeuler.org> - 2.8.1-3
 - Type:bugfix
 - ID:NA
 - SUG:NA
 - DESC:avoid errors during installation and uninstallation
 
-* Tue Sep 05 2019 suweifeng <suweifeng1@huawei.com> - 2.8.1-2
+* Thu Sep 05 2019 suweifeng <suweifeng1@huawei.com> - 2.8.1-2
 - Type:enhancemnet
 - ID:NA
 - SUG:NA
