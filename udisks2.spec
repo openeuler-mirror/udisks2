@@ -152,19 +152,6 @@ Obsoletes: libstoraged
 This package contains the dynamic library, which provides
 access to the udisksd daemon.
 
-%package -n %{name}-iscsi
-Summary: Module for iSCSI
-Group: System Environment/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release}
-License: LGPLv2+
-Requires: open-iscsi
-BuildRequires: open-iscsi-devel
-Provides:  storaged-iscsi = %{version}-%{release}
-Obsoletes: storaged-iscsi
-
-%description -n %{name}-iscsi
-This package contains module for iSCSI configuration.
-
 %package -n %{name}-lvm2
 Summary: Module for LVM2
 Group: System Environment/Libraries
@@ -302,7 +289,6 @@ autoreconf -ivf
     --enable-lvmcache \
 %endif
     --enable-lvm2     \
-    --enable-iscsi
 make %{?_smp_mflags}
 
 %install
@@ -385,10 +371,6 @@ udevadm trigger
 %{_libdir}/udisks2/modules/libudisks2_lvm2.so
 %{_datadir}/polkit-1/actions/org.freedesktop.UDisks2.lvm2.policy
 
-%files -n %{name}-iscsi
-%{_libdir}/udisks2/modules/libudisks2_iscsi.so
-%{_datadir}/polkit-1/actions/org.freedesktop.UDisks2.iscsi.policy
-
 %files -n lib%{name}-devel
 %{_libdir}/libudisks2.so
 %dir %{_includedir}/udisks2
@@ -441,7 +423,7 @@ udevadm trigger
 - Type:bugfix
 - ID:NA
 - SUG:NA
-- DESC:revise the bogus date in changelog and iscsi-initiator-utils to open-iscsi
+- DESC:revise the bogus date in changelog and delete the unnecessary subpackage "udisks2-iscsi"
 
 * Tue Dec 24 2019 openEuler Buildteam <buildteam@openeuler.org> - 2.8.1-3
 - Type:bugfix
