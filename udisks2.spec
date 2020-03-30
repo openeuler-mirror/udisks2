@@ -60,7 +60,7 @@ Name:    udisks2
 Summary: Disk Manager
 Version: 2.8.1
 %if %{is_git} == 0
-Release: 5 
+Release: 6
 %else
 Release: 0.%{build_date}git%{git_hash}%{?dist}
 %endif
@@ -80,7 +80,7 @@ BuildRequires: libacl-devel
 BuildRequires: chrpath
 BuildRequires: gtk-doc
 BuildRequires: intltool
-BuildRequires: redhat-rpm-config
+BuildRequires: system-rpm-config
 BuildRequires: libblockdev-devel        >= %{libblockdev_version}
 BuildRequires: libblockdev-part-devel   >= %{libblockdev_version}
 BuildRequires: libblockdev-loop-devel   >= %{libblockdev_version}
@@ -422,6 +422,12 @@ udevadm trigger
 %endif
 
 %changelog
+* Mon Mar 30 2020 swf504 <eulerstoragemt@huawei.com> - 2.8.1-6
+- Type:enhancemnet
+- ID:NA
+- SUG:restart
+- DESC:Replace with system-rpm-config
+
 * Sat Mar 28 2020 hy <eulerstoragemt@huawei.com> - 2.8.1-5
 - Type:enhancemnet
 - ID:NA
