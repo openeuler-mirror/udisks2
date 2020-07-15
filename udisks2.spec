@@ -58,9 +58,9 @@
 
 Name:    udisks2
 Summary: Disk Manager
-Version: 2.8.1
+Version: 2.9.0
 %if %{is_git} == 0
-Release: 6
+Release: 1
 %else
 Release: 0.%{build_date}git%{git_hash}%{?dist}
 %endif
@@ -337,11 +337,12 @@ udevadm trigger
 %dir %{_sysconfdir}/udisks2/modules.conf.d
 %endif
 %{_sysconfdir}/udisks2/udisks2.conf
+%{_sysconfdir}/udisks2/mount_options.conf.example
 
-%{_sysconfdir}/dbus-1/system.d/org.freedesktop.UDisks2.conf
+%{_datadir}/dbus-1/system.d/org.freedesktop.UDisks2.conf
 %{_datadir}/bash-completion/completions/udisksctl
+%{_tmpfilesdir}/%{name}.conf
 %{_unitdir}/udisks2.service
-%{_unitdir}/clean-mount-point@.service
 %{_udevrulesdir}/80-udisks2.rules
 %{_sbindir}/umount.udisks2
 
@@ -385,6 +386,22 @@ udevadm trigger
 %{_datadir}/gtk-doc/html/udisks2/*
 %endif
 %{_libdir}/pkgconfig/udisks2.pc
+%{_libdir}/pkgconfig/udisks2-lvm2.pc
+%if 0%{?with_bcache}
+%{_libdir}/pkgconfig/udisks2-bcache.pc
+%endif
+%if 0%{?with_btrfs}
+%{_libdir}/pkgconfig/udisks2-btrfs.pc
+%endif
+%if 0%{?with_lsm}
+%{_libdir}/pkgconfig/udisks2-lsm.pc
+%endif
+%if 0%{?with_zram}
+%{_libdir}/pkgconfig/udisks2-zram.pc
+%endif
+%if 0%{?with_vdo}
+%{_libdir}/pkgconfig/udisks2-vdo.pc
+%endif
 
 %if 0%{?with_bcache}
 %files -n %{name}-bcache
@@ -422,6 +439,9 @@ udevadm trigger
 %endif
 
 %changelog
+* Tue Jul 14 2020 Zhiqiang Liu <liuzhiqiang26@huwei.com> - 2.9.0-1
+- update from 2.8.1 to 2.9.0
+
 * Mon Mar 30 2020 swf504 <eulerstoragemt@huawei.com> - 2.8.1-6
 - Type:enhancemnet
 - ID:NA
