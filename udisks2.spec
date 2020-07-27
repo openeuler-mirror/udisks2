@@ -60,7 +60,7 @@ Name:    udisks2
 Summary: Disk Manager
 Version: 2.9.0
 %if %{is_git} == 0
-Release: 1
+Release: 2
 %else
 Release: 0.%{build_date}git%{git_hash}%{?dist}
 %endif
@@ -68,6 +68,8 @@ License: GPLv2+
 Group:   System Environment/Libraries
 URL:     https://github.com/storaged-project/udisks
 Source0: https://github.com/storaged-project/udisks/releases/download/udisks-%{version}/udisks-%{version}.tar.bz2
+
+Patch1:  0001-udiskslinuxmountoptions-Prevent-a-memory-leak.patch
 
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gobject-introspection-devel >= %{gobject_introspection_version}
@@ -439,6 +441,9 @@ udevadm trigger
 %endif
 
 %changelog
+* Mon Jul 27 2020 Zhiqiang Liu <lzhq28@mail.ustc.edu.cn> - 2.9.0-2
+- update from 2.8.1 to 2.9.0
+
 * Tue Jul 14 2020 Zhiqiang Liu <liuzhiqiang26@huwei.com> - 2.9.0-1
 - update from 2.8.1 to 2.9.0
 
