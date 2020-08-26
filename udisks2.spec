@@ -58,9 +58,9 @@
 
 Name:    udisks2
 Summary: Disk Manager
-Version: 2.8.1
+Version: 2.9.0
 %if %{is_git} == 0
-Release: 4 
+Release: 2
 %else
 Release: 0.%{build_date}git%{git_hash}%{?dist}
 %endif
@@ -68,6 +68,8 @@ License: GPLv2+
 Group:   System Environment/Libraries
 URL:     https://github.com/storaged-project/udisks
 Source0: https://github.com/storaged-project/udisks/releases/download/udisks-%{version}/udisks-%{version}.tar.bz2
+
+Patch1:  0001-udiskslinuxmountoptions-Prevent-a-memory-leak.patch
 
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gobject-introspection-devel >= %{gobject_introspection_version}
@@ -80,7 +82,7 @@ BuildRequires: libacl-devel
 BuildRequires: chrpath
 BuildRequires: gtk-doc
 BuildRequires: intltool
-BuildRequires: redhat-rpm-config
+BuildRequires: system-rpm-config
 BuildRequires: libblockdev-devel        >= %{libblockdev_version}
 BuildRequires: libblockdev-part-devel   >= %{libblockdev_version}
 BuildRequires: libblockdev-loop-devel   >= %{libblockdev_version}
@@ -305,6 +307,9 @@ chrpath --delete %{buildroot}/%{_libexecdir}/udisks2/udisksd
 
 %find_lang udisks2
 
+%check
+make check
+
 %post -n %{name}
 %systemd_post udisks2.service
 udevadm trigger
@@ -334,11 +339,12 @@ udevadm trigger
 %dir %{_sysconfdir}/udisks2/modules.conf.d
 %endif
 %{_sysconfdir}/udisks2/udisks2.conf
+%{_sysconfdir}/udisks2/mount_options.conf.example
 
-%{_sysconfdir}/dbus-1/system.d/org.freedesktop.UDisks2.conf
+%{_datadir}/dbus-1/system.d/org.freedesktop.UDisks2.conf
 %{_datadir}/bash-completion/completions/udisksctl
+%{_tmpfilesdir}/%{name}.conf
 %{_unitdir}/udisks2.service
-%{_unitdir}/clean-mount-point@.service
 %{_udevrulesdir}/80-udisks2.rules
 %{_sbindir}/umount.udisks2
 
@@ -382,6 +388,22 @@ udevadm trigger
 %{_datadir}/gtk-doc/html/udisks2/*
 %endif
 %{_libdir}/pkgconfig/udisks2.pc
+%{_libdir}/pkgconfig/udisks2-lvm2.pc
+%if 0%{?with_bcache}
+%{_libdir}/pkgconfig/udisks2-bcache.pc
+%endif
+%if 0%{?with_btrfs}
+%{_libdir}/pkgconfig/udisks2-btrfs.pc
+%endif
+%if 0%{?with_lsm}
+%{_libdir}/pkgconfig/udisks2-lsm.pc
+%endif
+%if 0%{?with_zram}
+%{_libdir}/pkgconfig/udisks2-zram.pc
+%endif
+%if 0%{?with_vdo}
+%{_libdir}/pkgconfig/udisks2-vdo.pc
+%endif
 
 %if 0%{?with_bcache}
 %files -n %{name}-bcache
@@ -419,6 +441,24 @@ udevadm trigger
 %endif
 
 %changelog
+* Mon Jul 27 2020 Zhiqiang Liu <lzhq28@mail.ustc.edu.cn> - 2.9.0-2
+- update from 2.8.1 to 2.9.0
+
+* Tue Jul 14 2020 Zhiqiang Liu <liuzhiqiang26@huwei.com> - 2.9.0-1
+- update from 2.8.1 to 2.9.0
+
+* Mon Mar 30 2020 swf504 <eulerstoragemt@huawei.com> - 2.8.1-6
+- Type:enhancemnet
+- ID:NA
+- SUG:restart
+- DESC:Replace with system-rpm-config
+
+* Sat Mar 28 2020 hy <eulerstoragemt@huawei.com> - 2.8.1-5
+- Type:enhancemnet
+- ID:NA
+- SUG:restart
+- DESC:add make check
+
 * Sun Jan 12 2020 openEuler Buildteam <buildteam@openeuler.org> - 2.8.1-4
 - Type:bugfix
 - ID:NA
