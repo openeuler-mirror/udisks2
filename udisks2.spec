@@ -18,7 +18,6 @@
 %define default_luks_encryption         luks1
 
 %define is_fedora                       (0%{?rhel} == 0) && (0%{?openeuler} == 0)
-%define is_git                          %(git show > /dev/null 2>&1 && echo 1 || echo 0)
 %define git_hash                        %(git log -1 --pretty=format:"%h" || true)
 %define build_date                      %(date '+%Y%m%d')
 
@@ -59,17 +58,14 @@
 Name:    udisks2
 Summary: Disk Manager
 Version: 2.9.0
-%if %{is_git} == 0
-Release: 2
-%else
-Release: 0.%{build_date}git%{git_hash}%{?dist}
-%endif
+Release: 3
 License: GPLv2+
 Group:   System Environment/Libraries
 URL:     https://github.com/storaged-project/udisks
 Source0: https://github.com/storaged-project/udisks/releases/download/udisks-%{version}/udisks-%{version}.tar.bz2
 
 Patch1:  0001-udiskslinuxmountoptions-Prevent-a-memory-leak.patch
+Patch2:  0002-Memory-leak-fixes.patch
 
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gobject-introspection-devel >= %{gobject_introspection_version}
@@ -441,6 +437,9 @@ udevadm trigger
 %endif
 
 %changelog
+* Thu Oct 29 2020 Zhiqiang Liu <lzhq28@mail.ustc.edu.cn> - 2.9.0-3
+- backport one patch to fix memory leak problems
+
 * Mon Jul 27 2020 Zhiqiang Liu <lzhq28@mail.ustc.edu.cn> - 2.9.0-2
 - update from 2.8.1 to 2.9.0
 
