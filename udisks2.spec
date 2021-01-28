@@ -57,8 +57,8 @@
 
 Name:    udisks2
 Summary: Disk Manager
-Version: 2.9.0
-Release: 3
+Version: 2.9.1
+Release: 1
 License: GPLv2+
 Group:   System Environment/Libraries
 URL:     https://github.com/storaged-project/udisks
@@ -427,7 +427,8 @@ udevadm trigger
 %dir %{_sysconfdir}/udisks2/modules.conf.d
 %{_libdir}/udisks2/modules/libudisks2_zram.so
 %{_datadir}/polkit-1/actions/org.freedesktop.UDisks2.zram.policy
-%{_unitdir}/zram-setup@.service
+%{_unitdir}/udisks2-zram-setup@.service            
+%{_udevrulesdir}/90-udisks2-zram.rules
 %endif
 
 %if 0%{?with_vdo}
@@ -437,6 +438,9 @@ udevadm trigger
 %endif
 
 %changelog
+* Thu Jan 14 2020 yanglongkang <yanglongkang@huawei.com> - 2.9.1-1
+- update to 2.9.1
+
 * Thu Oct 29 2020 Zhiqiang Liu <lzhq28@mail.ustc.edu.cn> - 2.9.0-3
 - backport one patch to fix memory leak problems
 
