@@ -59,17 +59,14 @@
 Name:    udisks2
 Summary: Disk Manager
 Version: 2.9.0
-%if %{is_git} == 0
-Release: 2
-%else
-Release: 0.%{build_date}git%{git_hash}%{?dist}
-%endif
+Release: 3
 License: GPLv2+
 Group:   System Environment/Libraries
 URL:     https://github.com/storaged-project/udisks
 Source0: https://github.com/storaged-project/udisks/releases/download/udisks-%{version}/udisks-%{version}.tar.bz2
 
 Patch1:  0001-udiskslinuxmountoptions-Prevent-a-memory-leak.patch
+Patch2:  0002-CVE-2021-3802.patch
 
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gobject-introspection-devel >= %{gobject_introspection_version}
@@ -259,7 +256,7 @@ This package contains module for VDO management.
 %endif
 
 %prep
-%setup -q -n udisks-%{version}
+%autosetup -p1 -n udisks-%{version}
 sed -i udisks/udisks2.conf.in -e "s/encryption=luks1/encryption=%{default_luks_encryption}/"
 
 %build
@@ -441,6 +438,10 @@ udevadm trigger
 %endif
 
 %changelog
+* Tue Jan 5 2022 yanglongkang <yanglongkang@huawei.com> -2.9.0-3
+- rectify errors in the spec file
+  fix CVE-2021-3802
+
 * Mon Jul 27 2020 Zhiqiang Liu <lzhq28@mail.ustc.edu.cn> - 2.9.0-2
 - update from 2.8.1 to 2.9.0
 
