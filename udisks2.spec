@@ -59,8 +59,8 @@
 Name:    udisks2
 Summary: Disk Manager
 Version: 2.9.0
-Release: 3
-License: GPLv2+
+Release: 4
+License: GPL-2.0+ and LGPL-2.0+
 Group:   System Environment/Libraries
 URL:     https://github.com/storaged-project/udisks
 Source0: https://github.com/storaged-project/udisks/releases/download/udisks-%{version}/udisks-%{version}.tar.bz2
@@ -438,6 +438,9 @@ udevadm trigger
 %endif
 
 %changelog
+* Sat Feb 19 2022 yanglongkang <yanglongkang@h-partners> - 2.9.0-4
+- correct License
+
 * Tue Jan 5 2022 yanglongkang <yanglongkang@huawei.com> -2.9.0-3
 - rectify errors in the spec file
   fix CVE-2021-3802
