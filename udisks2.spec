@@ -58,12 +58,12 @@
 Name:    udisks2
 Summary: Disk Manager
 Version: 2.9.4
-Release: 3
+Release: 4
 License: GPL-2.0+ and LGPL-2.0+
 Group:   System Environment/Libraries
 URL:     https://github.com/storaged-project/udisks
 Source0: https://github.com/storaged-project/udisks/releases/download/udisks-%{version}/udisks-%{version}.tar.bz2
-
+Patch1:  0001-udiskslinuxmountoptions-Do-not-free-static-daemon-resources.patch
 
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gobject-introspection-devel >= %{gobject_introspection_version}
@@ -253,7 +253,7 @@ This package contains module for VDO management.
 %endif
 
 %prep
-%setup -q -n udisks-%{version}
+%autosetup -n udisks-%{version} -p1
 sed -i udisks/udisks2.conf.in -e "s/encryption=luks1/encryption=%{default_luks_encryption}/"
 
 %build
@@ -436,6 +436,9 @@ udevadm trigger
 %endif
 
 %changelog
+* Tue Feb 21 2023 miaoguanqin <miaoguanqin@huawei.com> - 2.9.4-4
+- fix coredump while stop udisks2
+
 * Sat Oct 29 2022 wangzhiqiang <wangzhiqiang95@huawei.com> - 2.9.4-3
 - update release
 
