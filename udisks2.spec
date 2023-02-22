@@ -59,7 +59,7 @@
 Name:    udisks2
 Summary: Disk Manager
 Version: 2.9.0
-Release: 4
+Release: 5
 License: GPL-2.0+ and LGPL-2.0+
 Group:   System Environment/Libraries
 URL:     https://github.com/storaged-project/udisks
@@ -67,6 +67,7 @@ Source0: https://github.com/storaged-project/udisks/releases/download/udisks-%{v
 
 Patch1:  0001-udiskslinuxmountoptions-Prevent-a-memory-leak.patch
 Patch2:  0002-CVE-2021-3802.patch
+Patch3:  0003-udiskslinuxmountoptions-Do-not-free-static-daemon-resources.patch
 
 BuildRequires: glib2-devel >= %{glib2_version}
 BuildRequires: gobject-introspection-devel >= %{gobject_introspection_version}
@@ -438,6 +439,9 @@ udevadm trigger
 %endif
 
 %changelog
+* Wed Feb 22 2023 miaoguanqin <miaoguanqin@huawei.com> - 2.9.0-5
+- fix coredump with stop udisks2
+
 * Sat Feb 19 2022 yanglongkang <yanglongkang@h-partners> - 2.9.0-4
 - correct License
 
